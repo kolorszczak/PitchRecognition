@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+def AAVer = '4.3.1'
+def SupportVer = '26.0.1'
+def RetrofitVer = '2.3.0'
+def RxJavaVer = '2.1.3'
+def RxAndroidVer = '2.0.1'
+def RxLifecycleVer = '2.1.0'
+def FastAdapterVer = '2.6.3'
+def FastAdapterCommonVer = '2.6.0'
+def GsonVer = '2.8.1'
+def MultiDexVer = '1.0.1'
+def DialogsVer = '0.9.4.7'
+def LombokVer = '1.16.18'
+
+retrolambda {
+    jvmArgs '-noverify'
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "mihau.eu.pitchrecognition"
+        minSdkVersion 21
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def project = "PitchRecognizer"
+            def SEP = "_"
+            def version = variant.versionName
+            def newApkName = project + SEP + version + ".apk"
+
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    newApkName)
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/TarsosDSP-Android-latest.jar')
+
+    // Android Annotation
+    annotationProcessor "org.androidannotations:androidannotations:$AAVer"
+    compile "org.androidannotations:androidannotations-api:$AAVer"
+    annotationProcessor "org.androidannotations:otto:$AAVer"
+
+    // Android
+    compile "com.android.support:appcompat-v7:$SupportVer"
+    compile "com.android.support:support-compat:$SupportVer"
+    compile "com.android.support:support-core-utils:$SupportVer"
+    compile "com.android.support:support-core-ui:$SupportVer"
+    compile "com.android.support:support-fragment:$SupportVer"
+    compile "com.android.support:support-annotations:$SupportVer"
+    compile "com.android.support:support-vector-drawable:$SupportVer"
+    compile "com.android.support:palette-v7:$SupportVer"
+    compile "com.android.support:design:$SupportVer"
+    compile "com.android.support:recyclerview-v7:$SupportVer"
+    compile "com.android.support:multidex:$MultiDexVer"
+
+    // Squereup
+    compile "com.squareup.retrofit2:adapter-rxjava2:$RetrofitVer"
+
+    // Google
+    compile "com.google.code.gson:gson:$GsonVer"
+
+    // Rx
+    compile "com.trello.rxlifecycle2:rxlifecycle:$RxLifecycleVer"
+    compile "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$RxLifecycleVer"
+    compile "com.trello.rxlifecycle2:rxlifecycle-android:$RxLifecycleVer"
+    compile "com.trello.rxlifecycle2:rxlifecycle-components:$RxLifecycleVer"
+    compile "io.reactivex.rxjava2:rxandroid:$RxAndroidVer"
+    compile "io.reactivex.rxjava2:rxjava:$RxJavaVer"
+
+    // Features
+    compile "com.mikepenz:fastadapter:$FastAdapterVer@aar"
+    compile "com.mikepenz:fastadapter-commons:$FastAdapterVer@aar"
+    compile "com.mikepenz:fastadapter-extensions:$FastAdapterCommonVer@aar"
+    compile('com.mikepenz:materialize:1.0.3@aar') { transitive = true }
+    compile "com.mikepenz:itemanimators:1.0.0@aar"
+    compile('com.mikepenz:iconics-core:2.9.1@aar') { transitive = true }
+
+    compile "com.afollestad.material-dialogs:core:$DialogsVer"
+    compile "com.afollestad.material-dialogs:commons:$DialogsVer"
+    compile "org.projectlombok:lombok:$LombokVer"
+
+    compile 'com.github.bumptech.glide:glide:4.0.0'
+    compile 'jp.wasabeef:glide-transformations:3.0.1'
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+    compile 'com.googlecode.totallylazy:totallylazy:1.86'
+
+}
