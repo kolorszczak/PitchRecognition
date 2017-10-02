@@ -9,16 +9,14 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import be.tarsos.dsp.AudioDispatcher;
-import be.tarsos.dsp.AudioProcessor;
 import be.tarsos.dsp.io.android.AudioDispatcherFactory;
-import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchProcessor;
 import mihau.eu.pitchrecognition.utils.NotePitchMap;
 
 /**
  * Created by kolorszczak on 2017-10-01.
  */
-@EActivity()
+@EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
     @ViewById
@@ -30,18 +28,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPitchRecognition() {
-        AudioDispatcher audioDispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0);
-
-        PitchDetectionHandler pitchDetectionHandler = (pitchDetectionResult, audioEvent) -> {
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050,1024,0);
+        dispatcher.addAudioProcessor(new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050, 1024, (pitchDetectionResult, audioEvent) -> {
             final float pitchInHz = pitchDetectionResult.getPitch();
             runOnUiThread(() -> setupPitchLabel(pitchInHz));
-        };
-
-        AudioProcessor pitchProcessor = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050, 1024, pitchDetectionHandler);
-        audioDispatcher.addAudioProcessor(pitchProcessor);
-
-        Thread audioThread = new Thread(audioDispatcher, "Audio Thread");
-        audioThread.start();
+        }));
+        new Thread(dispatcher,"Audio Dispatcher").start();
     }
 
     @SuppressLint("SetTextI18n")

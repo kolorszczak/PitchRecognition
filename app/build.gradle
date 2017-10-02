@@ -60,13 +60,10 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/TarsosDSP-Android-latest.jar')
-
     // Android Annotation
     annotationProcessor "org.androidannotations:androidannotations:$AAVer"
     compile "org.androidannotations:androidannotations-api:$AAVer"
     annotationProcessor "org.androidannotations:otto:$AAVer"
-
     // Android
     compile "com.android.support:appcompat-v7:$SupportVer"
     compile "com.android.support:support-compat:$SupportVer"
@@ -79,13 +76,10 @@ dependencies {
     compile "com.android.support:design:$SupportVer"
     compile "com.android.support:recyclerview-v7:$SupportVer"
     compile "com.android.support:multidex:$MultiDexVer"
-
     // Squereup
     compile "com.squareup.retrofit2:adapter-rxjava2:$RetrofitVer"
-
     // Google
     compile "com.google.code.gson:gson:$GsonVer"
-
     // Rx
     compile "com.trello.rxlifecycle2:rxlifecycle:$RxLifecycleVer"
     compile "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$RxLifecycleVer"
@@ -93,23 +87,19 @@ dependencies {
     compile "com.trello.rxlifecycle2:rxlifecycle-components:$RxLifecycleVer"
     compile "io.reactivex.rxjava2:rxandroid:$RxAndroidVer"
     compile "io.reactivex.rxjava2:rxjava:$RxJavaVer"
-
     // Features
     compile "com.mikepenz:fastadapter:$FastAdapterVer@aar"
     compile "com.mikepenz:fastadapter-commons:$FastAdapterVer@aar"
     compile "com.mikepenz:fastadapter-extensions:$FastAdapterCommonVer@aar"
     compile('com.mikepenz:materialize:1.0.3@aar') { transitive = true }
-    compile "com.mikepenz:itemanimators:1.0.0@aar"
+    compile 'com.mikepenz:itemanimators:1.0.0@aar'
     compile('com.mikepenz:iconics-core:2.9.1@aar') { transitive = true }
-
     compile "com.afollestad.material-dialogs:core:$DialogsVer"
     compile "com.afollestad.material-dialogs:commons:$DialogsVer"
     compile "org.projectlombok:lombok:$LombokVer"
-
     compile 'com.github.bumptech.glide:glide:4.0.0'
     compile 'jp.wasabeef:glide-transformations:3.0.1'
-
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
     compile 'com.googlecode.totallylazy:totallylazy:1.86'
-
+    compile files('libs/TarsosDSP-Android-2.0.jar')
 }
